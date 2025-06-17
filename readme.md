@@ -28,3 +28,5 @@ docker-compose -f docker-compose.local.yml up
 `/graphql`  
 `/playground` (GraphQL IDE)  
 ```
+
+![image](https://github.com/user-attachments/assets/b1392b24-b320-42f5-9e26-5bcf9cb8be26)
