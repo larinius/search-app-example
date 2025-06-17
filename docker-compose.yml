@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./search-app
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./search-backend
+    ports:
+      - "8888:8888"
+    volumes:
+      - db-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=8888
+      - DATABASE_URL=sqlite:/app/data/db.sqlite
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge

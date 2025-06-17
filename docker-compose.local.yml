@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./search-app
+    ports:
+      - "5173:80"  # Host:5173 → Container:80
+    environment:
+      - VITE_API_URL=http://backend:8888/graphql
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./search-backend
+    ports:
+      - "8888:8888"  # Host:8888 → Container:8888
+    volumes:
+      - db-data:/app/data
+      - ./search-backend:/app
+    environment:
+      - NODE_ENV=development
+      - PORT=8888
+      - DATABASE_URL=sqlite:/app/data/db.sqlite
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge
